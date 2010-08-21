@@ -25,14 +25,6 @@ sub setAddend2LineEdit() {
     return this->{addend2LineEdit} = shift;
 }
 
-sub alignmentLineEdit() {
-    return this->{alignmentLineEdit};
-}
-
-sub setAlignmentLineEdit() {
-    return this->{alignmentLineEdit} = shift;
-}
-
 sub resultLineEdit() {
     return this->{resultLineEdit};
 }
@@ -58,18 +50,6 @@ sub NEW {
     
     this->setAddendLineEdit( Qt::LineEdit() );
     this->setAddend2LineEdit( Qt::LineEdit() );
-# [1]
-
-# [2]
-    my $alignmentGroup = Qt::GroupBox(this->tr('Alignment'));
-
-    my $alignmentLabel = Qt::Label(this->tr('Type:'));
-    my $alignmentComboBox = Qt::ComboBox();
-    $alignmentComboBox->addItem(this->tr('Left'));
-    $alignmentComboBox->addItem(this->tr('Centered'));
-    $alignmentComboBox->addItem(this->tr('Right'));
-
-    this->setAlignmentLineEdit( Qt::LineEdit() );
 
     my $resultGroup = Qt::GroupBox(this->tr('Result:'));
 
@@ -94,12 +74,6 @@ sub NEW {
 
     this->addend2LineEdit->setValidator(Qt::DoubleValidator(5,
             999.0, 2, this->addend2LineEdit));
-
-    my $alignmentLayout = Qt::GridLayout();
-    $alignmentLayout->addWidget($alignmentLabel, 0, 0);
-    $alignmentLayout->addWidget($alignmentComboBox, 0, 1);
-    $alignmentLayout->addWidget(this->alignmentLineEdit, 1, 0, 1, 2);
-    $alignmentGroup->setLayout($alignmentLayout);
 
     my $resultLayout = Qt::GridLayout();
     $resultLayout->addWidget($resultLabel, 0, 0);
