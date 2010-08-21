@@ -46,18 +46,18 @@ sub NEW {
     my ( $class, $parent ) = @_;
     $class->SUPER::NEW( $parent );
 
-    my $addendGroup = Qt::GroupBox(this->tr('Addend #1'));
+    my $addendGroup = Qt::GroupBox();
 
     my $addendLabel = Qt::Label(this->tr('Addend #1:'));
 
-    my $addend2Group = Qt::GroupBox(this->tr('Addend #2'));
+    my $addend2Group = Qt::GroupBox();
 
     my $addend2Label = Qt::Label(this->tr('Addend #2:'));
     
     this->setAddendLineEdit( Qt::LineEdit() );
     this->setAddend2LineEdit( Qt::LineEdit() );
 
-    my $resultGroup = Qt::GroupBox(this->tr('Result:'));
+    my $resultGroup = Qt::GroupBox();
 
     my $resultLabel = Qt::Label(this->tr('Result:'));
 
