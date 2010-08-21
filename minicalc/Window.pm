@@ -54,8 +54,8 @@ sub NEW {
 
     my $addend2Label = Qt::Label(this->tr('Addend #2:'));
     
-    this->setAddendLineEdit( Qt::LineEdit() );
-    this->setAddend2LineEdit( Qt::LineEdit() );
+    this->setAddendLineEdit( Qt::LineEdit("1") );
+    this->setAddend2LineEdit( Qt::LineEdit("1") );
 
     my $resultGroup = Qt::GroupBox();
 
@@ -101,6 +101,8 @@ sub NEW {
         this, SLOT 'update()');
 
     this->setWindowTitle(this->tr('Mini Calculator'));
+
+    this->update();
 }
 
 1;
