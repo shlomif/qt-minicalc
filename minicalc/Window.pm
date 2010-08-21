@@ -9,14 +9,6 @@ use QtGui4;
 use QtCore4::isa qw( Qt::Widget );
 use QtCore4::slots;
 
-sub echoLineEdit() {
-    return this->{echoLineEdit};
-}
-
-sub setEchoLineEdit() {
-    return this->{echoLineEdit} = shift;
-}
-
 sub addendLineEdit() {
     return this->{addendLineEdit};
 }
