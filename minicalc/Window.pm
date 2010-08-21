@@ -112,6 +112,9 @@ sub NEW {
     $layout->addWidget($addendGroup, 0, 0);
     $layout->addWidget($addend2Group, 0, 1);
     $layout->addWidget($resultGroup, 0, 2);
+
+    my $button = Qt::PushButton("Update");
+    $layout->addWidget($button, 1, 0, 1, 2);
     this->setLayout($layout);
 
     this->setWindowTitle(this->tr('Line Edits'));
