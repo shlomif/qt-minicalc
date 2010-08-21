@@ -68,20 +68,6 @@ sub NEW {
     my ( $class, $parent ) = @_;
     $class->SUPER::NEW( $parent );
 
-    my $echoGroup = Qt::GroupBox(this->tr('Echo'));
-
-    my $echoLabel = Qt::Label(this->tr('Mode:'));
-    my $echoComboBox = Qt::ComboBox();
-    $echoComboBox->addItem(this->tr('Normal'));
-    $echoComboBox->addItem(this->tr('Password'));
-    $echoComboBox->addItem(this->tr('PasswordEchoOnEdit'));
-    $echoComboBox->addItem(this->tr('No Echo'));
-
-    this->setEchoLineEdit( Qt::LineEdit() );
-    this->echoLineEdit->setFocus();
-# [0]
-
-# [1]
     my $validatorGroup = Qt::GroupBox(this->tr('Validator'));
 
     my $validatorLabel = Qt::Label(this->tr('Type:'));
@@ -120,37 +106,18 @@ sub NEW {
 # [3]
 
 # [4]
-    my $accessGroup = Qt::GroupBox(this->tr('Access'));
+    my $accessGroup = Qt::GroupBox(this->tr('Result:'));
 
-    my $accessLabel = Qt::Label(this->tr('Read-only:'));
-    my $accessComboBox = Qt::ComboBox();
-    $accessComboBox->addItem(this->tr('False'));
-    $accessComboBox->addItem(this->tr('True'));
+    my $accessLabel = Qt::Label(this->tr('Result:'));
 
     this->setAccessLineEdit( Qt::LineEdit() );
-# [4]
 
-# [5]
-    this->connect($echoComboBox, SIGNAL 'activated(int)',
-            this, SLOT 'echoChanged(int)');
-        
+    this->accessLineEdit->setReadOnly(1);
     this->connect($alignmentComboBox, SIGNAL 'activated(int)',
             this, SLOT 'alignmentChanged(int)');
     this->connect($inputMaskComboBox, SIGNAL 'activated(int)',
             this, SLOT 'inputMaskChanged(int)');
-    this->connect($accessComboBox, SIGNAL 'activated(int)',
-            this, SLOT 'accessChanged(int)');
-# [5]
 
-# [6]
-    my $echoLayout = Qt::GridLayout();
-    $echoLayout->addWidget($echoLabel, 0, 0);
-    $echoLayout->addWidget($echoComboBox, 0, 1);
-    $echoLayout->addWidget(this->echoLineEdit, 1, 0, 1, 2);
-    $echoGroup->setLayout($echoLayout);
-# [6]
-
-# [7]
     my $validatorLayout = Qt::GridLayout();
     $validatorLayout->addWidget($validatorLabel, 0, 0);
     $validatorLayout->addWidget(this->validatorLineEdit, 1, 0, 1, 2);
@@ -181,18 +148,15 @@ sub NEW {
 
     my $accessLayout = Qt::GridLayout();
     $accessLayout->addWidget($accessLabel, 0, 0);
-    $accessLayout->addWidget($accessComboBox, 0, 1);
     $accessLayout->addWidget(this->accessLineEdit, 1, 0, 1, 2);
     $accessGroup->setLayout($accessLayout);
 # [7]
 
 # [8]
     my $layout = Qt::GridLayout();
-    $layout->addWidget($echoGroup, 0, 0);
-    $layout->addWidget($validatorGroup, 1, 0);
-    $layout->addWidget($validator2Group, 1, 1);
-    $layout->addWidget($alignmentGroup, 2, 0);
-    $layout->addWidget($inputMaskGroup, 0, 1);
+    $layout->addWidget($validatorGroup, 0, 0);
+    $layout->addWidget($validator2Group, 0, 1);
+    $layout->addWidget($accessGroup, 0, 2);
     this->setLayout($layout);
 
     this->setWindowTitle(this->tr('Line Edits'));
