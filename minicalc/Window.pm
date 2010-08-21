@@ -9,7 +9,6 @@ use QtGui4;
 use QtCore4::isa qw( Qt::Widget );
 use QtCore4::slots
     echoChanged => ['int'],
-    validatorChanged => ['int'],
     alignmentChanged => ['int'],
     inputMaskChanged => ['int'],
     accessChanged => ['int'];
@@ -26,8 +25,16 @@ sub validatorLineEdit() {
     return this->{validatorLineEdit};
 }
 
+sub validator2LineEdit() {
+    return this->{validator2LineEdit};
+}
+
 sub setValidatorLineEdit() {
     return this->{validatorLineEdit} = shift;
+}
+
+sub setValidator2LineEdit() {
+    return this->{validator2LineEdit} = shift;
 }
 
 sub alignmentLineEdit() {
@@ -78,12 +85,13 @@ sub NEW {
     my $validatorGroup = Qt::GroupBox(this->tr('Validator'));
 
     my $validatorLabel = Qt::Label(this->tr('Type:'));
-    my $validatorComboBox = Qt::ComboBox();
-    $validatorComboBox->addItem(this->tr('No validator'));
-    $validatorComboBox->addItem(this->tr('Integer validator'));
-    $validatorComboBox->addItem(this->tr('Double validator'));
 
+    my $validator2Group = Qt::GroupBox(this->tr('Validator'));
+
+    my $validator2Label = Qt::Label(this->tr('Type:'));
+    
     this->setValidatorLineEdit( Qt::LineEdit() );
+    this->setValidator2LineEdit( Qt::LineEdit() );
 # [1]
 
 # [2]
@@ -125,8 +133,7 @@ sub NEW {
 # [5]
     this->connect($echoComboBox, SIGNAL 'activated(int)',
             this, SLOT 'echoChanged(int)');
-    this->connect($validatorComboBox, SIGNAL 'activated(int)',
-            this, SLOT 'validatorChanged(int)');
+        
     this->connect($alignmentComboBox, SIGNAL 'activated(int)',
             this, SLOT 'alignmentChanged(int)');
     this->connect($inputMaskComboBox, SIGNAL 'activated(int)',
@@ -146,9 +153,19 @@ sub NEW {
 # [7]
     my $validatorLayout = Qt::GridLayout();
     $validatorLayout->addWidget($validatorLabel, 0, 0);
-    $validatorLayout->addWidget($validatorComboBox, 0, 1);
     $validatorLayout->addWidget(this->validatorLineEdit, 1, 0, 1, 2);
     $validatorGroup->setLayout($validatorLayout);
+
+    this->validatorLineEdit->setValidator(Qt::DoubleValidator(5,
+            999.0, 2, this->validatorLineEdit));
+
+    my $validator2Layout = Qt::GridLayout();
+    $validator2Layout->addWidget($validator2Label, 0, 0);
+    $validator2Layout->addWidget(this->validator2LineEdit, 1, 0, 1, 2);
+    $validator2Group->setLayout($validator2Layout);
+
+    this->validator2LineEdit->setValidator(Qt::DoubleValidator(5,
+            999.0, 2, this->validator2LineEdit));
 
     my $alignmentLayout = Qt::GridLayout();
     $alignmentLayout->addWidget($alignmentLabel, 0, 0);
@@ -173,9 +190,9 @@ sub NEW {
     my $layout = Qt::GridLayout();
     $layout->addWidget($echoGroup, 0, 0);
     $layout->addWidget($validatorGroup, 1, 0);
+    $layout->addWidget($validator2Group, 1, 1);
     $layout->addWidget($alignmentGroup, 2, 0);
     $layout->addWidget($inputMaskGroup, 0, 1);
-    $layout->addWidget($accessGroup, 1, 1);
     this->setLayout($layout);
 
     this->setWindowTitle(this->tr('Line Edits'));
@@ -200,23 +217,6 @@ sub echoChanged {
 }
 # [9]
 
-# [10]
-sub validatorChanged {
-    my ($index) = @_;
-    if ( $index == 0 ) {
-        this->validatorLineEdit->setValidator(0);
-    }
-    elsif ( $index == 1 ) {
-        this->validatorLineEdit->setValidator(Qt::IntValidator(
-            this->validatorLineEdit));
-    }
-    elsif ( $index == 2 ) {
-        this->validatorLineEdit->setValidator(Qt::DoubleValidator(-999.0,
-            999.0, 2, this->validatorLineEdit));
-    }
-
-    this->validatorLineEdit->clear();
-}
 # [10]
 
 # [11]
