@@ -20,20 +20,20 @@ sub setEchoLineEdit() {
     return this->{echoLineEdit} = shift;
 }
 
-sub validatorLineEdit() {
-    return this->{validatorLineEdit};
+sub addendLineEdit() {
+    return this->{addendLineEdit};
 }
 
-sub validator2LineEdit() {
-    return this->{validator2LineEdit};
+sub addend2LineEdit() {
+    return this->{addend2LineEdit};
 }
 
-sub setValidatorLineEdit() {
-    return this->{validatorLineEdit} = shift;
+sub setAddendLineEdit() {
+    return this->{addendLineEdit} = shift;
 }
 
-sub setValidator2LineEdit() {
-    return this->{validator2LineEdit} = shift;
+sub setAddend2LineEdit() {
+    return this->{addend2LineEdit} = shift;
 }
 
 sub alignmentLineEdit() {
@@ -59,16 +59,16 @@ sub NEW {
     my ( $class, $parent ) = @_;
     $class->SUPER::NEW( $parent );
 
-    my $validatorGroup = Qt::GroupBox(this->tr('Validator'));
+    my $addendGroup = Qt::GroupBox(this->tr('Addend #1'));
 
-    my $validatorLabel = Qt::Label(this->tr('Type:'));
+    my $addendLabel = Qt::Label(this->tr('Addend #1:'));
 
-    my $validator2Group = Qt::GroupBox(this->tr('Validator'));
+    my $addend2Group = Qt::GroupBox(this->tr('Addend #2'));
 
-    my $validator2Label = Qt::Label(this->tr('Type:'));
+    my $addend2Label = Qt::Label(this->tr('Addend #2:'));
     
-    this->setValidatorLineEdit( Qt::LineEdit() );
-    this->setValidator2LineEdit( Qt::LineEdit() );
+    this->setAddendLineEdit( Qt::LineEdit() );
+    this->setAddend2LineEdit( Qt::LineEdit() );
 # [1]
 
 # [2]
@@ -92,21 +92,21 @@ sub NEW {
     this->connect($alignmentComboBox, SIGNAL 'activated(int)',
             this, SLOT 'alignmentChanged(int)');
 
-    my $validatorLayout = Qt::GridLayout();
-    $validatorLayout->addWidget($validatorLabel, 0, 0);
-    $validatorLayout->addWidget(this->validatorLineEdit, 1, 0, 1, 2);
-    $validatorGroup->setLayout($validatorLayout);
+    my $addendLayout = Qt::GridLayout();
+    $addendLayout->addWidget($addendLabel, 0, 0);
+    $addendLayout->addWidget(this->addendLineEdit, 1, 0, 1, 2);
+    $addendGroup->setLayout($addendLayout);
 
-    this->validatorLineEdit->setValidator(Qt::DoubleValidator(5,
-            999.0, 2, this->validatorLineEdit));
+    this->addendLineEdit->setValidator(Qt::DoubleValidator(5,
+            999.0, 2, this->addendLineEdit));
 
-    my $validator2Layout = Qt::GridLayout();
-    $validator2Layout->addWidget($validator2Label, 0, 0);
-    $validator2Layout->addWidget(this->validator2LineEdit, 1, 0, 1, 2);
-    $validator2Group->setLayout($validator2Layout);
+    my $addend2Layout = Qt::GridLayout();
+    $addend2Layout->addWidget($addend2Label, 0, 0);
+    $addend2Layout->addWidget(this->addend2LineEdit, 1, 0, 1, 2);
+    $addend2Group->setLayout($addend2Layout);
 
-    this->validator2LineEdit->setValidator(Qt::DoubleValidator(5,
-            999.0, 2, this->validator2LineEdit));
+    this->addend2LineEdit->setValidator(Qt::DoubleValidator(5,
+            999.0, 2, this->addend2LineEdit));
 
     my $alignmentLayout = Qt::GridLayout();
     $alignmentLayout->addWidget($alignmentLabel, 0, 0);
@@ -122,8 +122,8 @@ sub NEW {
 
 # [8]
     my $layout = Qt::GridLayout();
-    $layout->addWidget($validatorGroup, 0, 0);
-    $layout->addWidget($validator2Group, 0, 1);
+    $layout->addWidget($addendGroup, 0, 0);
+    $layout->addWidget($addend2Group, 0, 1);
     $layout->addWidget($resultGroup, 0, 2);
     this->setLayout($layout);
 
