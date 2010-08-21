@@ -7,7 +7,7 @@ use QtCore4;
 use QtGui4;
 # [0]
 use QtCore4::isa qw( Qt::Widget );
-use QtCore4::slots;
+use QtCore4::slots update => [];
 
 sub addendLineEdit() {
     return this->{addendLineEdit};
@@ -31,6 +31,12 @@ sub resultLineEdit() {
 
 sub setAccessLineEdit() {
     return this->{resultLineEdit} = shift;
+}
+
+sub update {
+    this->resultLineEdit->setText(
+        this->addendLineEdit()->text() + this->addend2LineEdit->text()
+    );
 }
 
 # [0]
@@ -87,9 +93,12 @@ sub NEW {
     $layout->addWidget($addend2Group, 0, 1);
     $layout->addWidget($resultGroup, 0, 2);
 
-    my $button = Qt::PushButton("Update");
-    $layout->addWidget($button, 1, 0, 1, 2);
+    my $update_button = Qt::PushButton("Update");
+    $layout->addWidget($update_button, 1, 0, 1, 2);
     this->setLayout($layout);
+
+    this->connect($update_button, SIGNAL 'clicked()',
+        this, SLOT 'update()');
 
     this->setWindowTitle(this->tr('Line Edits'));
 }
