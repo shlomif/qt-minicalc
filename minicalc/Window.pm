@@ -100,7 +100,7 @@ sub NEW {
     this->connect($update_button, SIGNAL 'clicked()',
         this, SLOT 'update()');
 
-    this->setWindowTitle(this->tr('Line Edits'));
+    this->setWindowTitle(this->tr('Mini Calculator'));
 }
 
 1;
