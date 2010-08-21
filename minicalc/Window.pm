@@ -10,7 +10,6 @@ use QtCore4::isa qw( Qt::Widget );
 use QtCore4::slots
     echoChanged => ['int'],
     alignmentChanged => ['int'],
-    inputMaskChanged => ['int'],
     accessChanged => ['int'];
 
 sub echoLineEdit() {
@@ -43,14 +42,6 @@ sub alignmentLineEdit() {
 
 sub setAlignmentLineEdit() {
     return this->{alignmentLineEdit} = shift;
-}
-
-sub inputMaskLineEdit() {
-    return this->{inputMaskLineEdit};
-}
-
-sub setInputMaskLineEdit() {
-    return this->{inputMaskLineEdit} = shift;
 }
 
 sub accessLineEdit() {
@@ -90,22 +81,7 @@ sub NEW {
     $alignmentComboBox->addItem(this->tr('Right'));
 
     this->setAlignmentLineEdit( Qt::LineEdit() );
-# [2]
 
-# [3]
-    my $inputMaskGroup = Qt::GroupBox(this->tr('Input mask'));
-
-    my $inputMaskLabel = Qt::Label(this->tr('Type:'));
-    my $inputMaskComboBox = Qt::ComboBox();
-    $inputMaskComboBox->addItem(this->tr('No mask'));
-    $inputMaskComboBox->addItem(this->tr('Phone number'));
-    $inputMaskComboBox->addItem(this->tr('ISO date'));
-    $inputMaskComboBox->addItem(this->tr('License key'));
-
-    this->setInputMaskLineEdit( Qt::LineEdit() );
-# [3]
-
-# [4]
     my $accessGroup = Qt::GroupBox(this->tr('Result:'));
 
     my $accessLabel = Qt::Label(this->tr('Result:'));
@@ -115,8 +91,6 @@ sub NEW {
     this->accessLineEdit->setReadOnly(1);
     this->connect($alignmentComboBox, SIGNAL 'activated(int)',
             this, SLOT 'alignmentChanged(int)');
-    this->connect($inputMaskComboBox, SIGNAL 'activated(int)',
-            this, SLOT 'inputMaskChanged(int)');
 
     my $validatorLayout = Qt::GridLayout();
     $validatorLayout->addWidget($validatorLabel, 0, 0);
@@ -139,12 +113,6 @@ sub NEW {
     $alignmentLayout->addWidget($alignmentComboBox, 0, 1);
     $alignmentLayout->addWidget(this->alignmentLineEdit, 1, 0, 1, 2);
     $alignmentGroup->setLayout($alignmentLayout);
-
-    my $inputMaskLayout = Qt::GridLayout();
-    $inputMaskLayout->addWidget($inputMaskLabel, 0, 0);
-    $inputMaskLayout->addWidget($inputMaskComboBox, 0, 1);
-    $inputMaskLayout->addWidget(this->inputMaskLineEdit, 1, 0, 1, 2);
-    $inputMaskGroup->setLayout($inputMaskLayout);
 
     my $accessLayout = Qt::GridLayout();
     $accessLayout->addWidget($accessLabel, 0, 0);
@@ -197,26 +165,6 @@ sub alignmentChanged {
     }
 }
 # [11]
-
-# [12]
-sub inputMaskChanged {
-    my ($index) = @_;
-    if ( $index == 0 ) {
-        this->inputMaskLineEdit->setInputMask('');
-    }
-    elsif ( $index == 1 ) {
-        this->inputMaskLineEdit->setInputMask('+99 99 99 99 99;_');
-    }
-    elsif ( $index == 2 ) {
-        this->inputMaskLineEdit->setInputMask('0000-00-00');
-        this->inputMaskLineEdit->setText('00000000');
-        this->inputMaskLineEdit->setCursorPosition(0);
-    }
-    elsif ( $index == 3 ) {
-        this->inputMaskLineEdit->setInputMask('>AAAAA-AAAAA-AAAAA-AAAAA-AAAAA;#');
-    }
-}
-# [12]
 
 # [13]
 sub accessChanged {
