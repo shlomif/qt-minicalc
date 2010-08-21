@@ -10,7 +10,7 @@ use QtCore4::isa qw( Qt::Widget );
 use QtCore4::slots
     echoChanged => ['int'],
     alignmentChanged => ['int'],
-    accessChanged => ['int'];
+    ;
 
 sub echoLineEdit() {
     return this->{echoLineEdit};
@@ -44,12 +44,12 @@ sub setAlignmentLineEdit() {
     return this->{alignmentLineEdit} = shift;
 }
 
-sub accessLineEdit() {
-    return this->{accessLineEdit};
+sub resultLineEdit() {
+    return this->{resultLineEdit};
 }
 
 sub setAccessLineEdit() {
-    return this->{accessLineEdit} = shift;
+    return this->{resultLineEdit} = shift;
 }
 
 # [0]
@@ -82,13 +82,13 @@ sub NEW {
 
     this->setAlignmentLineEdit( Qt::LineEdit() );
 
-    my $accessGroup = Qt::GroupBox(this->tr('Result:'));
+    my $resultGroup = Qt::GroupBox(this->tr('Result:'));
 
-    my $accessLabel = Qt::Label(this->tr('Result:'));
+    my $resultLabel = Qt::Label(this->tr('Result:'));
 
     this->setAccessLineEdit( Qt::LineEdit() );
 
-    this->accessLineEdit->setReadOnly(1);
+    this->resultLineEdit->setReadOnly(1);
     this->connect($alignmentComboBox, SIGNAL 'activated(int)',
             this, SLOT 'alignmentChanged(int)');
 
@@ -114,17 +114,17 @@ sub NEW {
     $alignmentLayout->addWidget(this->alignmentLineEdit, 1, 0, 1, 2);
     $alignmentGroup->setLayout($alignmentLayout);
 
-    my $accessLayout = Qt::GridLayout();
-    $accessLayout->addWidget($accessLabel, 0, 0);
-    $accessLayout->addWidget(this->accessLineEdit, 1, 0, 1, 2);
-    $accessGroup->setLayout($accessLayout);
+    my $resultLayout = Qt::GridLayout();
+    $resultLayout->addWidget($resultLabel, 0, 0);
+    $resultLayout->addWidget(this->resultLineEdit, 1, 0, 1, 2);
+    $resultGroup->setLayout($resultLayout);
 # [7]
 
 # [8]
     my $layout = Qt::GridLayout();
     $layout->addWidget($validatorGroup, 0, 0);
     $layout->addWidget($validator2Group, 0, 1);
-    $layout->addWidget($accessGroup, 0, 2);
+    $layout->addWidget($resultGroup, 0, 2);
     this->setLayout($layout);
 
     this->setWindowTitle(this->tr('Line Edits'));
@@ -165,17 +165,5 @@ sub alignmentChanged {
     }
 }
 # [11]
-
-# [13]
-sub accessChanged {
-    my ($index) = @_;
-    if ( $index == 0 ) {
-        this->accessLineEdit->setReadOnly(0);
-    }
-    elsif ( $index == 1 ) {
-        this->accessLineEdit->setReadOnly(1);
-    }
-}
-# [13]
 
 1;
