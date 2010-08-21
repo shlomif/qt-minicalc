@@ -7,10 +7,7 @@ use QtCore4;
 use QtGui4;
 # [0]
 use QtCore4::isa qw( Qt::Widget );
-use QtCore4::slots
-    echoChanged => ['int'],
-    alignmentChanged => ['int'],
-    ;
+use QtCore4::slots;
 
 sub echoLineEdit() {
     return this->{echoLineEdit};
@@ -89,8 +86,6 @@ sub NEW {
     this->setAccessLineEdit( Qt::LineEdit() );
 
     this->resultLineEdit->setReadOnly(1);
-    this->connect($alignmentComboBox, SIGNAL 'activated(int)',
-            this, SLOT 'alignmentChanged(int)');
 
     my $addendLayout = Qt::GridLayout();
     $addendLayout->addWidget($addendLabel, 0, 0);
@@ -129,41 +124,5 @@ sub NEW {
 
     this->setWindowTitle(this->tr('Line Edits'));
 }
-# [8]
-
-# [9]
-sub echoChanged {
-    my ($index) = @_;
-    if ($index == 0) {
-        this->echoLineEdit->setEchoMode(Qt::LineEdit::Normal());
-    }
-    elsif ( $index == 1 ) {
-        this->echoLineEdit->setEchoMode(Qt::LineEdit::Password());
-    }
-    elsif ( $index == 2 ) {
-    	this->echoLineEdit->setEchoMode(Qt::LineEdit::PasswordEchoOnEdit());
-    }
-    elsif ( $index == 3 ) {
-        this->echoLineEdit->setEchoMode(Qt::LineEdit::NoEcho());
-    }
-}
-# [9]
-
-# [10]
-
-# [11]
-sub alignmentChanged {
-    my ($index) = @_;
-    if ( $index == 0 ) {
-        this->alignmentLineEdit->setAlignment(Qt::AlignLeft());
-    }
-    elsif ( $index == 1 ) {
-        this->alignmentLineEdit->setAlignment(Qt::AlignCenter());
-    }
-    elsif ( $index == 2 ) {
-    	this->alignmentLineEdit->setAlignment(Qt::AlignRight());
-    }
-}
-# [11]
 
 1;
