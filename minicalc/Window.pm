@@ -53,7 +53,7 @@ sub NEW {
     my $addend2Group = Qt::GroupBox();
 
     my $addend2Label = Qt::Label(this->tr('Addend #2:'));
-    
+
     this->setAddendLineEdit( Qt::LineEdit("1") );
     this->setAddend2LineEdit( Qt::LineEdit("1") );
 
